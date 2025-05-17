@@ -51,10 +51,25 @@ jobs:
 
       - name: Wait for VM to be ready
         run: sleep 60
-  
-      - name: Get VM public IP
+
+    # Step 9: Get VM IP with retry
+      - name: Get VM public IP (with retry)
         id: get_ip
-        run: echo "vm_ip=$(terraform output -raw vm_public_ip)" >> $GITHUB_OUTPUT
+        run: |
+          for i in {1..5}; do
+            IP=$(terraform output -raw vm_public_ip || true)
+            if [[ -n "$IP" ]]; then
+              echo "vm_ip=$IP" >> $GITHUB_OUTPUT
+              break
+            fi
+            echo "Waiting for VM IP..."
+            sleep 10
+          done
+
+  
+      # - name: Get VM public IP
+      #   id: get_ip
+      #   run: echo "vm_ip=$(terraform output -raw vm_public_ip)" >> $GITHUB_OUTPUT
 
       # Step 9: Install sshpass
       - name: Install sshpass
