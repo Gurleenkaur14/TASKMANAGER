@@ -51,7 +51,7 @@ jobs:
           ARM_CLIENT_SECRET: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}
           ARM_TENANT_ID: ${{ fromJson(secrets.AZURE_CREDENTIALS).tenantId }}
           ARM_SUBSCRIPTION_ID: ${{ fromJson(secrets.AZURE_CREDENTIALS).subscriptionId }}
-        run: terraform plan
+        run: terraform plan -auto-approve
 
       # - name: Terraform Apply
       #   env:
@@ -61,11 +61,12 @@ jobs:
       #     ARM_SUBSCRIPTION_ID: ${{ fromJson(secrets.AZURE_CREDENTIALS).subscriptionId }}
       #   run: terraform apply -auto-approve
 
-      - name: Wait for VM to be ready
-        run: sleep 80
+      # - name: Wait for VM to be ready
+      #   run: sleep 80
 
     # Step 9: Get VM IP with retry
       - name: Get VM public IP (with retry)
+        id: get_ip
         env:
           AZURE_RESOURCE_GROUP: proj-rg
           AZURE_PUBLIC_IP_NAME: proj-public-ip
@@ -78,7 +79,7 @@ jobs:
               break
             fi
             echo "Waiting for public IP..."
-            sleep 20
+            sleep 10
           done
 
 
