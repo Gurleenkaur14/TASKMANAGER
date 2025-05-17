@@ -66,16 +66,18 @@ jobs:
 
     # Step 9: Get VM IP with retry
       - name: Get VM public IP (with retry)
-        id: get_ip
+        env:
+          AZURE_RESOURCE_GROUP: proj-rg
+          AZURE_PUBLIC_IP_NAME: proj-public-ip
         run: |
           for i in {1..5}; do
-            IP=$(terraform output -raw vm_public_ip || true)
+            IP=$(az network public-ip show --resource-group $AZURE_RESOURCE_GROUP --name $AZURE_PUBLIC_IP_NAME --query ipAddress -o tsv)
             if [[ -n "$IP" ]]; then
-              echo "VM IP resolved: $IP"
+              echo "Public IP found: $IP"
               echo "vm_ip=$IP" >> $GITHUB_OUTPUT
               break
             fi
-            echo "Waiting for VM IP..."
+            echo "Waiting for public IP..."
             sleep 20
           done
 
