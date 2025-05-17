@@ -13,18 +13,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         
-      - name: Log in to Docker Hub
-        run: docker login -u ${{ secrets.DOCKER_NAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+      # - name: Log in to Docker Hub
+      #   run: docker login -u ${{ secrets.DOCKER_NAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push frontend Docker image
-        run: |
-          docker build -t ${{ secrets.DOCKER_NAME }}/todof:latest -f task-manager-frontend/Dockerfile task-manager-frontend
-          docker push ${{ secrets.DOCKER_NAME }}/todof:latest
+      # - name: Build and push frontend Docker image
+      #   run: |
+      #     docker build -t ${{ secrets.DOCKER_NAME }}/todof:latest -f task-manager-frontend/Dockerfile task-manager-frontend
+      #     docker push ${{ secrets.DOCKER_NAME }}/todof:latest
 
-      - name: Build and push backend Docker image
-        run: |
-          docker build -t ${{ secrets.DOCKER_NAME }}/todob:latest -f task-manager-backend/Dockerfile task-manager-backend
-          docker push ${{ secrets.DOCKER_NAME }}/todob:latest
+      # - name: Build and push backend Docker image
+      #   run: |
+      #     docker build -t ${{ secrets.DOCKER_NAME }}/todob:latest -f task-manager-backend/Dockerfile task-manager-backend
+      #     docker push ${{ secrets.DOCKER_NAME }}/todob:latest
           
       - name: Log in to Azure
         uses: azure/login@v1
@@ -42,12 +42,12 @@ jobs:
       - name: Validate Terraform
         run: terraform validate
 
-      # - name: Plan Terraform
-      #   id: plan
-      #   run: terraform plan
+      - name: Plan Terraform
+        id: plan
+        run: terraform plan
 
-      # - name: Terraform Apply
-      #   run: terraform apply -auto-approve
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
 
       - name: Wait for VM to be ready
         run: sleep 60
