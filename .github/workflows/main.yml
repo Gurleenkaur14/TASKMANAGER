@@ -104,7 +104,7 @@ jobs:
           VM_PASS: ${{ secrets.VM_PASSWORD }}
           DOCKER_USER: ${{ secrets.DOCKER_NAME }}
         run: |
-          sshpass -p "$VM_PASS" ssh -o StrictHostKeyChecking=no $VM_USER@$VM_IP << 'EOF'
+          sshpass -p "$VM_PASS" ssh -o StrictHostKeyChecking=no $VM_USER@$VM_IP <<EOF
             sudo apt-get update -y
             sudo apt-get install -y docker.io
             sudo systemctl enable docker
@@ -113,4 +113,4 @@ jobs:
             sudo docker pull $DOCKER_USER/todof:latest
             sudo docker run -d -p 5000:5000 $DOCKER_USER/todob:latest
             sudo docker run -d -p 3000:3000 $DOCKER_USER/todof:latest
-            EOF
+          EOF
