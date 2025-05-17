@@ -55,3 +55,4 @@ jobs:
       - name: Get VM public IP
         id: get_ip
         run: echo "vm_ip=$(terraform output -raw vm_public_ip)" >> $GITHUB_OUTPUT
+
