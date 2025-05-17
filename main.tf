@@ -7,6 +7,15 @@ terraform {
       version = "~> 3.0"
     }
   }
+
+  backend "remote" {
+    hostname     = "app.terraform.io"
+    organization = "Learners_"
+
+    workspaces {
+      name = "TASKMANAGER"
+    }
+  }
 }
 
 provider "azurerm" {
