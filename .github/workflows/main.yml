@@ -49,9 +49,9 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve
 
-      # - name: Wait for VM to be ready
-      #   run: sleep 30
+      - name: Wait for VM to be ready
+        run: sleep 60
   
-      # - name: Get VM public IP
-      #   id: get_ip
-      #   run: echo "vm_ip=$(terraform output -raw vm_public_ip)" >> $GITHUB_OUTPUT
+      - name: Get VM public IP
+        id: get_ip
+        run: echo "vm_ip=$(terraform output -raw vm_public_ip)" >> $GITHUB_OUTPUT
