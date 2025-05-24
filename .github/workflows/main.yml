@@ -114,3 +114,4 @@ jobs:
             sudo docker run -d -p 5000:5000 $DOCKER_USER/todob:latest
             sudo docker run -d -p 3000:3000 $DOCKER_USER/todof:latest
           EOF
+
