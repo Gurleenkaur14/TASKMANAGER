@@ -62,7 +62,7 @@ jobs:
       #   run: terraform apply -auto-approve
 
       - name: Wait for VM to be ready
-        run: sleep 40
+        run: sleep 30
 
     # Step 9: Get VM IP with retry
       - name: Get VM public IP (with retry)
